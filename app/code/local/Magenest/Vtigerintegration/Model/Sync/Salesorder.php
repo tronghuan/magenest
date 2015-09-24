@@ -78,7 +78,7 @@ class Magenest_Vtigerintegration_Model_Sync_Salesorder extends Magenest_Vtigerin
                 'billing_country' => $b_address->getCountry() ? $country->loadByCode($b_address->getCountry())->getName() : $b_address->getCountry()
             );
         }
-        //print_r($dataBill);
+        
         $s_address = $model->getShippingAddress();
         if (isset($s_address) && $s_address != "") {
             $dataShip = array(
@@ -89,9 +89,6 @@ class Magenest_Vtigerintegration_Model_Sync_Salesorder extends Magenest_Vtigerin
                 'shipping_country' => $s_address->getCountry() ? $country->loadByCode($s_address->getCountry())->getName() : $s_address->getCountry()
             );
         }
-
-        //print_r($dataShip);
-
 
         $i = 0;
         foreach ($model->getAllItems() as $item) {
@@ -104,10 +101,8 @@ class Magenest_Vtigerintegration_Model_Sync_Salesorder extends Magenest_Vtigerin
             if ($price > 0) {
                 // get productId
                 $productId = Mage::getModel('vtigerintegration/sync_product')->sync($product_id);
-                //$product_id = $productId[]
                 $lineItem[$i] = array('productid' => $productId, 'quantity' => $qty, 'listprice' => $price);
                 $i++;
-                //print_r($productId);
             }
         }
 
