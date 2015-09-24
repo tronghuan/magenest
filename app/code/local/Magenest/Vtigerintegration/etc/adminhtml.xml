@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <vtigerintegration translate="title" module="vtigerintegration">
+                                        <title>Vtigerintegration Settings</title>
+                                        <sort_order>100</sort_order>
+                                    </vtigerintegration>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <vtigerintegration module="vtigerintegration">
+                        <title>Vtigerintegration</title>
+                        <sort_order>100</sort_order>
+                        <children>
+                            <report module="vtigerintegration">
+                                <title>Report</title>
+                                <sort_order>20</sort_order>
+                                <action>vtigerintegration_admin/adminhtml_vtigerintegration</action>
+                            </report>
+                            <map module="vtigerintegration">
+                                <title>Field Mapping</title>
+                                <sort_order>10</sort_order>
+                                <action>vtigeringration_admin/adminhtml_map/index</action>
+                            </map>
+                        </children>
+                    </vtigerintegration>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

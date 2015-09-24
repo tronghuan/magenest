@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magenest_Vtigerintegration>
+            <version>0.1.0</version>
+        </Magenest_Vtigerintegration>
+    </modules>
+    
+    <frontend>
+        <routers>
+            <vtigerintegration>
+                <use>standard</use>
+                <args>
+                    <module>Magenest_Vtigerintegration</module>
+                    <frontName>vtigerintegration</frontName>
+                </args>
+            </vtigerintegration>
+        </routers>
+        <translate>
+            <modules>
+                <Magenest_Vtigerintegration>
+                    <files>
+                        <default>Magenest_Vtigerintegration.csv</default>
+                    </files>
+                </Magenest_Vtigerintegration>
+            </modules>
+        </translate>
+    </frontend>
+    
+    <admin>
+        <routers>
+            <vtigerintegration_admin>
+                <use>admin</use>
+                <args>
+                    <module>Magenest_Vtigerintegration</module>
+                    <frontName>vtigerintegration_admin</frontName>
+                </args>
+            </vtigerintegration_admin>
+        </routers>
+    </admin>
+    
+    <adminhtml>
+        <menu>
+            <vtigerintegration module="vtigerintegration">
+                <title>Vtigerintegration</title>
+                <sort_order>102</sort_order>
+                <children>
+                    <map module="vtigerintegration">
+                        <title>Field Mapping</title>
+                        <sort_order>1</sort_order>
+                        <action>vtigerintegration_admin/adminhtml_map/index</action>
+                    </map>
+                    <report module="vtigerintegration">
+                        <title>Report</title>
+                        <sort_order>2</sort_order>
+                        <action>vtigerintegration_admin/adminhtml_report/index</action>
+                    </report>
+                    <config module="vtigerintegration">
+                        <title>Configuration</title>
+                        <sort_order>3</sort_order>
+                        <action>adminhtml/system_config/edit/section/vtigerintegration</action>
+                    </config>
+                </children>
+            </vtigerintegration>
+        </menu>
+        
+        <layout>
+            <updates>
+                <vtigerintegration>
+                    <file>Magenest_Vtigerintegration.xml</file>
+                </vtigerintegration>
+            </updates>
+        </layout>
+        
+        <translate>
+            <modules>
+                <Magenest_Vtigerintegration>
+                    <files>
+                        <default>Magenest_Vtigerintegration.csv</default>
+                    </files>
+                </Magenest_Vtigerintegration>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <global>        
+        <helpers>
+            <vtigerintegration>
+                <class>Magenest_Vtigerintegration_Helper</class>
+            </vtigerintegration>
+        </helpers>
+        
+        <blocks>
+            <vtigerintegration>
+                <class>Magenest_Vtigerintegration_Block</class>
+            </vtigerintegration>
+        </blocks>
+        
+        <models>
+            <vtigerintegration>
+                <class>Magenest_Vtigerintegration_Model</class>
+                <resourceModel>vtigerintegration_resource</resourceModel>
+            </vtigerintegration>
+            <vtigerintegration_resource>
+                <class>Magenest_Vtigerintegration_Model_Resource</class>
+                <entities>
+                    <map>
+                        <table>magenest_vtigerintegration_mapping</table>
+                    </map>
+                    <field>
+                        <table>magenest_vtigerintegration_field</table>
+                    </field>
+                    <report>
+                        <table>magenest_vtigerintegration_report</table>
+                    </report>
+                </entities>
+            </vtigerintegration_resource>
+        </models>
+        
+        <resources>
+            <vtigerintegration_setup>
+                <setup>
+                    <module>Magenest_Vtigerintegration</module>
+                </setup>
+            </vtigerintegration_setup>
+            <vtigerintegration_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </vtigerintegration_write>
+            <vtigerintegration_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </vtigerintegration_read>
+        </resources>
+        
+        <events>
+
+            <customer_register_success>
+                <observers>
+                    <vtigerintegration>
+                        <type>singleton</type>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncLead</method>
+                    </vtigerintegration>
+                </observers>
+            </customer_register_success> 
+
+            <customer_delete_commit_after>
+                <observers>
+                    <vtigerintegration>
+                        <type>singleton</type>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>deleteCustomer</method>
+                    </vtigerintegration>
+                </observers>
+            </customer_delete_commit_after>
+
+            <catalog_product_delete_commit_after>
+                <observers>
+                    <vtigerintegration>
+                        <type>singleton</type>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncLead</method>
+                    </vtigerintegration>
+                </observers>
+            </catalog_product_delete_commit_after>
+
+            <customer_address_save_after>
+                <observers>
+                    <vtigerintegration>
+                        <type>singleton</type>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>updateCustomer</method>
+                    </vtigerintegration>
+                </observers>
+            </customer_address_save_after>
+
+            <catalog_product_save_after>
+                <observers>
+                    <vtigerintegration>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncProduct</method>
+                    </vtigerintegration>
+                </observers>
+            </catalog_product_save_after>
+
+            <catalog_product_delete_commit_after>
+                <observers>
+                    <vtigerintegration>
+                        <type>singleton</type>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>deleteProduct</method>
+                    </vtigerintegration>
+                </observers>
+            </catalog_product_delete_commit_after>
+
+            <sales_order_place_after>
+                <observers>
+                    <vtigerintegration>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncOrder</method>
+                    </vtigerintegration>
+                </observers>
+            </sales_order_place_after> 
+
+            <newsletter_subscriber_save_commit_after>
+                <observers>
+                    <vtigerintegration>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncSubscriber</method>
+                    </vtigerintegration>
+                </observers>
+            </newsletter_subscriber_save_commit_after>
+
+            <sales_order_invoice_save_commit_after>
+                <observers>
+                    <vtigerintegration>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncInvoice</method>
+                    </vtigerintegration>
+                </observers>
+            </sales_order_invoice_save_commit_after> 
+            <catalogrule_rule_save_after>
+                <observers>
+                    <vtigerintegration>
+                        <class>Magenest_Vtigerintegration_Model_Observer</class>
+                        <method>syncCampaign</method>
+                    </vtigerintegration>
+                </observers>
+            </catalogrule_rule_save_after> 
+        </events>
+    </global>
+    
+    <default>
+        <design>
+            <header>
+                <welcome>Default welcome msg!</welcome>
+            </header>
+        </design>
+    </default>
+</config>

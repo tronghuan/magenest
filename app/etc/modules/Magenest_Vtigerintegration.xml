@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magenest_Vtigerintegration>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Magenest_Vtigerintegration>
+    </modules>
+</config>
